@@ -3,7 +3,7 @@
 ### INSTALLATION GUIDE
 1. Clone the project
 1. ``cd`` to the project and run ``composer install`` on the terminal to install php dependencies
-1. copy the `.env-example` file to `.env` file 
+1. copy the `.env.example` file to `.env` file  ``` cp .env.example .env ```
 1. Create a Mysql database and edit the ``.env`` to reflect your connections as follows:
 1. Migrate your migrations: `php artisan migrate`
 1. Generate application encryption key: `php artisan key:generate`
