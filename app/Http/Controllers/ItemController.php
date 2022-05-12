@@ -15,7 +15,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-       return Item::orderBy('created_at', 'desc')->get();
+       return Item::orderBy('order', 'asc')->get();
     }
 
     /**
@@ -36,8 +36,10 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $lastRow = Item::orderBy('order', 'desc')->first();
         $newItem = new Item;
         $newItem->name = $request->item['name'];
+        $newItem->order = $lastRow['order'] + 1;
         $newItem->save();
 
         return $newItem;
@@ -64,7 +66,20 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Item::find($id);
+        
+    }
+
+    public function updateItem(Request $request,$id)
+    {
+        $existingItem = Item::find($id);  
+        if($existingItem){
+           $existingItem->name = $request->item['name'];
+           $existingItem->updated_at = Carbon::now() ;
+           $existingItem->save();
+           return $existingItem;
+        } 
+        return "Item not found";
     }
 
     /**
@@ -103,5 +118,17 @@ class ItemController extends Controller
            return "Item deleted";
     }
     return "Item not found";
+    }
+
+    public function updateOrder(Request $request, $id)
+    {
+        $existingItem = Item::find($id);  
+        if($existingItem){
+           $existingItem->order = $request->order;
+           $existingItem->updated_at = Carbon::now() ;
+           $existingItem->save();
+           return $existingItem;
+        } 
+        return "Item not found";
     }
 }
