@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use Illuminate\Support\Carbon;
+use App\Http\Resources\ItemResource;
 
 class ItemController extends Controller
 {
@@ -15,7 +16,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-       return Item::orderBy('order', 'asc')->get();
+    //    return Item::orderBy('order', 'asc')->get();
+      return  ItemResource::collection(Item::orderBy('order', 'asc')->paginate(10));
     }
 
     /**
@@ -36,15 +38,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $lastRow = Item::orderBy('order', 'desc')->first();
+        $order = Item::max('order');
         $newItem = new Item;
-        $newItem->name = $request->item['name'];
-        $newItem->order = $lastRow['order'] + 1;
+        $newItem->name =   $request->item['name'];
+        $newItem->order = isset($order) ? $order + 1 : 0;
         $newItem->save();
-
-        return $newItem;
-
-
+        return new ItemResource($newItem);
     }
 
     /**
@@ -66,8 +65,8 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        return Item::find($id);
-        
+        // return Item::find($id);
+        return new ItemResource(Item::find($id));
     }
 
     public function updateItem(Request $request,$id)
@@ -77,7 +76,7 @@ class ItemController extends Controller
            $existingItem->name = $request->item['name'];
            $existingItem->updated_at = Carbon::now() ;
            $existingItem->save();
-           return $existingItem;
+           return new ItemResource($existingItem);
         } 
         return "Item not found";
     }
@@ -98,8 +97,7 @@ class ItemController extends Controller
            $existingItem->completed_at = Carbon::now() ;
            $existingItem->updated_at = Carbon::now() ;
            $existingItem->save();
-           return $existingItem;
-
+           return new ItemResource($existingItem);
         } 
         return "Item not found";
     }
@@ -122,13 +120,33 @@ class ItemController extends Controller
 
     public function updateOrder(Request $request, $id)
     {
-        $existingItem = Item::find($id);  
+        $existingItem = Item::find($id);
         if($existingItem){
-           $existingItem->order = $request->order;
-           $existingItem->updated_at = Carbon::now() ;
-           $existingItem->save();
-           return $existingItem;
-        } 
-        return "Item not found";
+        if($request->order < $existingItem->order ) //drag up
+            {
+            $queue = range($request->order, $existingItem->order);
+            unset($queue[$request->order]);
+            foreach($queue as $currentOrder) {
+            Item::where('order',$currentOrder)->update([ //control redunancy
+            'order' => $currentOrder + 1
+            ]);
+            }
+            }
+            else //drag down
+            {
+            $queue = range( $existingItem->order , $request->order);
+            unset($queue[$request->order]);
+            foreach($queue as $currentOrder) {
+            Item::where('order',$currentOrder)->update([ //control redunancy
+            'order' => ($currentOrder != 0 ) ? $currentOrder  - 1 : 0
+            ]);
+            }
+            }
+            $existingItem->order = $request->order;
+            $existingItem->updated_at = Carbon::now() ;
+            $existingItem->save();
+            return new ItemResource($existingItem);
+            } 
+            return "Item not found";
     }
 }

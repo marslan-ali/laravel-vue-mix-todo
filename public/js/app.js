@@ -1859,17 +1859,17 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     // axios.get('editCategory/'+id)  //or,
-    axios.get("/api/item/edit/".concat(this.$route.params.itemid)) //here 'itemid' from routes.js
+    axios.get("/api/items/".concat(this.$route.params.itemid, "/edit/")) //here 'itemid' from routes.js
     .then(function (response) {
-      console.log(response.data.name);
-      _this.item['name'] = response.data.name;
+      console.log(response);
+      _this.item['name'] = response.data.data.name;
     });
   },
   methods: {
     updateItem: function updateItem() {
       var _this2 = this;
 
-      axios.put("/api/item/updateItem/".concat(this.$route.params.itemid), {
+      axios.put("/api/items/updateItem/".concat(this.$route.params.itemid), {
         item: this.item
       }).then(function (response) {
         _this2.$router.push('/todo-list'); //redirect to item-list component after save
@@ -1927,7 +1927,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("api/items").then(function (res) {
-        _this.items = res.data;
+        _this.items = res.data.data;
       }).catch(function (error) {
         console.log(error);
       });
@@ -1984,7 +1984,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.post("api/item/store", {
+      axios.post("api/items", {
         item: this.item
       }).then(function (res) {
         if (res.status == 201) {
@@ -2035,7 +2035,7 @@ __webpack_require__.r(__webpack_exports__);
     updateCheck: function updateCheck() {
       var _this = this;
 
-      axios.put("api/item/".concat(this.item.id), {
+      axios.put("api/items/".concat(this.item.id), {
         item: this.item
       }).then(function (res) {
         if (res.status == 200) {
@@ -2048,7 +2048,7 @@ __webpack_require__.r(__webpack_exports__);
     removeItem: function removeItem() {
       var _this2 = this;
 
-      axios.delete("api/item/".concat(this.item.id)).then(function (res) {
+      axios.delete("api/items/".concat(this.item.id)).then(function (res) {
         if (res.status == 200) {
           _this2.$emit("itemchanged");
         }
@@ -2122,7 +2122,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var order = evt.path[0].__vue__.$attrs.index;
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put('api/item/updateOrder/' + this.temp.id, {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put('api/items/updateOrder/' + this.temp.id, {
         order: order
       }).then(function (res) {
         console.log('Order changed');

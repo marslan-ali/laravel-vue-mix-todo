@@ -40,7 +40,7 @@ export default {
   		onDrop (evt, item) {
   			const order = evt.path[0].__vue__.$attrs.index;
             Axios
-            .put('api/item/updateOrder/' + this.temp.id ,{
+            .put('api/items/updateOrder/' + this.temp.id ,{
                 order
             }).then(res =>{
                 console.log('Order changed');

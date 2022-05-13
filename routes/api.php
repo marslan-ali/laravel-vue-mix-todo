@@ -17,12 +17,7 @@ use App\Http\Controllers\ItemController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/item/edit/{id}', [ItemController::class, 'edit']);
-Route::put('/item/updateItem/{id}', [ItemController::class, 'updateItem']);
-Route::put('/item/updateOrder/{id}', [ItemController::class, 'updateOrder']);
-Route::get('/items', [ItemController::class, 'index']);
-Route::prefix('/item')->group(function(){
-    Route::post('/store',[ItemController::class, 'store']);
-    Route::put('/{id}' , [ItemController::class, 'update']);
-    Route::delete('/{id}', [ItemController::class, 'destroy'] );
-});
+Route::put('/items/updateItem/{id}', [ItemController::class, 'updateItem']);
+Route::put('/items/updateOrder/{id}', [ItemController::class, 'updateOrder']);
+Route::resource('items', ItemController::class);
+

@@ -30,15 +30,15 @@
         },
         mounted(){
             // axios.get('editCategory/'+id)  //or,
-            axios.get(`/api/item/edit/${this.$route.params.itemid}`)   //here 'itemid' from routes.js
+            axios.get(`/api/items/${this.$route.params.itemid}/edit/`)   //here 'itemid' from routes.js
             .then((response)=>{
-                console.log(response.data.name);
-                this.item['name'] = response.data.name; 
+                console.log(response);
+                this.item['name'] = response.data.data.name; 
             })
         },
         methods:{
             updateItem(){
-                axios.put(`/api/item/updateItem/${this.$route.params.itemid}`, {
+                axios.put(`/api/items/updateItem/${this.$route.params.itemid}`, {
                     item: this.item
                 })
                     .then((response)=>{

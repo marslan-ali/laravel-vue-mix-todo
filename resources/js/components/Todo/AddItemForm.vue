@@ -32,7 +32,7 @@ export default {
                 return;
             }
             axios
-                .post("api/item/store", {
+                .post("api/items", {
                     item: this.item
                 })
                 .then(res => {

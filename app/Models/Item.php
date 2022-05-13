@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'order', 'completed','completed_at','updated_at'];
+    protected $hidden = [
+        'created_at'
+    ];
 }

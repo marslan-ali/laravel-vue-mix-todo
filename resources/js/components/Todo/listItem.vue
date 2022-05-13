@@ -23,7 +23,7 @@ export default {
     methods: {
         updateCheck() {
             axios
-                .put(`api/item/${this.item.id}`, {
+                .put(`api/items/${this.item.id}`, {
                     item: this.item
                 })
                 .then(res => {
@@ -37,7 +37,7 @@ export default {
         },
         removeItem() {
             axios
-                .delete(`api/item/${this.item.id}`)
+                .delete(`api/items/${this.item.id}`)
                 .then(res => {
                     if (res.status == 200) {
                         this.$emit("itemchanged");

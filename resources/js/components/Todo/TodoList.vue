@@ -33,7 +33,7 @@ export default {
             axios
                 .get("api/items")
                 .then(res => {
-                    this.items = res.data;
+                    this.items = res.data.data;
                 })
                 .catch(error => {
                     console.log(error);
