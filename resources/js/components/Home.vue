@@ -9,9 +9,6 @@
 import Navbar from "./Navbar.vue";
 
 export default{
-    created(){
-        console.log('i created');
-    },
     components:{
         Navbar
     }

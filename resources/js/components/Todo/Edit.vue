@@ -29,7 +29,6 @@
             };
         },
         mounted(){
-            // axios.get('editCategory/'+id)  //or,
             axios.get(`/api/items/${this.$route.params.itemid}/edit/`)   //here 'itemid' from routes.js
             .then((response)=>{
                 console.log(response);

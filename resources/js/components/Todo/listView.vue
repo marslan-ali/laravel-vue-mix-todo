@@ -7,9 +7,9 @@
                 @dragover.prevent
                 @dragenter.prevent
                 >
+                   <!-- v-on:itemchanged="$emit('reloadlist')" -->
             <list-item
                 :item="item"
-                v-on:itemchanged="$emit('reloadlist')"
                 v-for="(item,index) in items"
                 :key="item.id"
                 :index="index++"
@@ -44,7 +44,9 @@ export default {
                 order
             }).then(res =>{
                 console.log('Order changed');
-                this.$parent.getItems();
+                // this.$parent.getItems();
+                this.$store.dispatch('allItems')
+
             })
   		}
     },

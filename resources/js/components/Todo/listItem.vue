@@ -28,7 +28,9 @@ export default {
                 })
                 .then(res => {
                     if (res.status == 200) {
-                        this.$emit("itemchanged");
+                        // this.$emit("itemchanged"); // event handler without vuex
+                        this.$store.dispatch('allItems')
+
                     }
                 })
                 .catch(error => {
@@ -40,7 +42,8 @@ export default {
                 .delete(`api/items/${this.item.id}`)
                 .then(res => {
                     if (res.status == 200) {
-                        this.$emit("itemchanged");
+                        // this.$emit("itemchanged"); // event handler without vuex
+                        this.$store.dispatch('allItems')
                     }
                 })
                 .catch(error => {

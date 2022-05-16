@@ -38,7 +38,8 @@ export default {
                 .then(res => {
                     if (res.status == 201) {
                         this.item.name = "";
-                        this.$emit("reloadlist");
+                        // this.$emit("reloadlist"); // event handler without vuex
+                        this.$store.dispatch('allItems')
                     }
                 })
                 .catch(error => {
