@@ -71,13 +71,13 @@ class ItemController extends Controller
 
     public function updateItem(Request $request,$id)
     {
-        $existingItem = Item::find($id);  
+        $existingItem = Item::find($id);
         if($existingItem){
            $existingItem->name = $request->item['name'];
            $existingItem->updated_at = Carbon::now() ;
            $existingItem->save();
            return new ItemResource($existingItem);
-        } 
+        }
         return "Item not found";
     }
 
@@ -90,7 +90,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $existingItem = Item::find($id);  
+        $existingItem = Item::find($id);
 
         if($existingItem){
            $existingItem->completed = $request->item['completed'] ? true : false;
@@ -98,7 +98,7 @@ class ItemController extends Controller
            $existingItem->updated_at = Carbon::now() ;
            $existingItem->save();
            return new ItemResource($existingItem);
-        } 
+        }
         return "Item not found";
     }
 
@@ -125,7 +125,7 @@ class ItemController extends Controller
         if($request->order < $existingItem->order ) //drag up
             {
             $queue = range($request->order, $existingItem->order);
-            unset($queue[$request->order]);
+            unset($queue[$existingItem->order]);
             foreach($queue as $currentOrder) {
             Item::where('order',$currentOrder)->update([ //control redunancy
             'order' => $currentOrder + 1
@@ -135,7 +135,6 @@ class ItemController extends Controller
             else //drag down
             {
             $queue = range( $existingItem->order , $request->order);
-            unset($queue[$request->order]);
             foreach($queue as $currentOrder) {
             Item::where('order',$currentOrder)->update([ //control redunancy
             'order' => ($currentOrder != 0 ) ? $currentOrder  - 1 : 0
@@ -146,7 +145,7 @@ class ItemController extends Controller
             $existingItem->updated_at = Carbon::now() ;
             $existingItem->save();
             return new ItemResource($existingItem);
-            } 
+            }
             return "Item not found";
     }
 }

@@ -1,19 +1,20 @@
 <template>
     <div class="mt-4">
-        <h4>List </h4>
+        <h4>List</h4>
         <hr class="w-50 m-auto mb-3" />
-        <ul class="list-group m-auto drop-zone"
-               @drop="onDrop($event, 1)"
-                @dragover.prevent
-                @dragenter.prevent
-                >
-                   <!-- v-on:itemchanged="$emit('reloadlist')" -->
+        <ul
+            class="list-group m-auto drop-zone"
+            @drop="onDrop($event, 1)"
+            @dragover.prevent
+            @dragenter.prevent
+        >
+            <!-- v-on:itemchanged="$emit('reloadlist')" -->
             <list-item
                 :item="item"
-                v-for="(item,index) in items"
+                v-for="(item, index) in items"
                 :key="item.id"
                 :index="index++"
-                :id ="`list_${index + 1}`"
+                :id="`list_${index + 1}`"
                 class="m-auto my-1 text-justify text-wrap "
                 ref:item
             />
@@ -23,7 +24,7 @@
 
 <script>
 import listItem from "./listItem";
-import draggable from 'vuedraggable';
+import draggable from "vuedraggable";
 import Axios from "axios";
 export default {
     components: {
@@ -32,24 +33,20 @@ export default {
     },
     data() {
         return {
-            temp:[]
-        }
+            temp: []
+        };
     },
     props: ["items"],
     methods: {
-  		onDrop (evt, item) {
-  			const order = evt.path[0].__vue__.$attrs.index;
-            Axios
-            .put('api/items/updateOrder/' + this.temp.id ,{
+        onDrop(evt, item) {
+            const order = evt.path[0].__vue__.$attrs.index;
+            Axios.put("api/items/updateOrder/" + this.temp.id, {
                 order
-            }).then(res =>{
-                console.log('Order changed');
-                // this.$parent.getItems();
-                this.$store.dispatch('allItems')
-
-            })
-  		}
-    },
+            }).then(res => {
+                this.$store.dispatch("allItems");
+            });
+        }
+    }
 };
 </script>
 

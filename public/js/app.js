@@ -2098,6 +2098,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2117,12 +2118,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var order = evt.path[0].__vue__.$attrs.index;
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put('api/items/updateOrder/' + this.temp.id, {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put("api/items/updateOrder/" + this.temp.id, {
         order: order
       }).then(function (res) {
-        console.log('Order changed'); // this.$parent.getItems();
-
-        _this.$store.dispatch('allItems');
+        _this.$store.dispatch("allItems");
       });
     }
   }
@@ -42071,7 +42070,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "mt-4" }, [
-    _c("h4", [_vm._v("List ")]),
+    _c("h4", [_vm._v("List")]),
     _vm._v(" "),
     _c("hr", { staticClass: "w-50 m-auto mb-3" }),
     _vm._v(" "),
@@ -61255,9 +61254,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   actions: {
     allItems: function allItems(context) {
-      axios.get('api/items/').then(function (response) {
-        console.log(response.data.data);
-        context.commit('getItems', response.data.data);
+      axios.get("api/items/").then(function (response) {
+        context.commit("getItems", response.data.data);
       });
     }
   },
@@ -61288,8 +61286,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! H:\sites\todo\vueJs\todoList\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! H:\sites\todo\vueJs\todoList\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! H:\sites\laravel-vue-mix-todo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! H:\sites\laravel-vue-mix-todo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
